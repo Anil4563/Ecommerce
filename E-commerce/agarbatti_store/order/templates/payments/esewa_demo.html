@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}eSewa Demo Payment - Agarbatti Store{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">🔒 eSewa Payment Demo</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <h5>🧪 Demo Mode Active</h5>
+                        <p class="mb-0">This is a simulated eSewa payment for project demonstration.</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Order Summary</h5>
+                            <div class="border rounded p-3">
+                                <p><strong>Order ID:</strong> {{ order.order_number }}</p>
+                                <p><strong>Amount:</strong> Rs. {{ order.total }}</p>
+                                <p><strong>Items:</strong> {{ order.items.count }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Test Credentials</h5>
+                            <div class="border rounded p-3 bg-light">
+                                <p><strong>Mobile:</strong> 9800000000</p>
+                                <p><strong>MPIN:</strong> 1234</p>
+                                <p><strong>OTP:</strong> 123456</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <div class="btn-group" role="group">
+                            <a href="{% url 'esewa_success_demo' order.id %}" class="btn btn-success btn-lg">
+                                ✅ Simulate Successful Payment
+                            </a>
+                            <a href="{% url 'esewa_failed_demo' order.id %}" class="btn btn-danger btn-lg">
+                                ❌ Simulate Failed Payment
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <small class="text-muted">
+                            In a real scenario, this would redirect to actual eSewa payment gateway.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

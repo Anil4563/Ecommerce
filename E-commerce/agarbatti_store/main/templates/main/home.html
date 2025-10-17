@@ -1,0 +1,260 @@
+{% extends 'main/base.html' %}
+{% load static widget_tweaks %}
+
+{% block title %}Home - Agarbatti Store{% endblock %}
+
+{% block content %}
+
+<!-- HOME SECTION -->
+<section id="home-section" class="pt-4 pt-lg-5 pb-4 pb-lg-5">
+  <div class="container-fluid">
+    <div class="row d-flex align-items-center justify-content-center">
+      <!-- Text Column -->
+      <div class="col-12 col-lg-6 p-3 p-lg-5 ps-lg-5 order-2 order-lg-1">
+        <h1 class="display-4 display-lg-1 fw-normal">Premium Agarbatti & Dhoop Batti,</h1>
+        <p class="display-5 display-lg-3 fw-normal">
+          <span style="font-weight: bold">Just </span> a Click Away
+        </p>
+        <p class="fw-light mb-4">
+         <b>Browse our wide range of aromatic incense sticks, place your order in just a few clicks, and enjoy the soothing fragrances delivered straight to your home.</b>
+        </p>
+        <div class="d-flex flex-column flex-sm-row">
+          <a href="{% url 'product_list' %}" class="btn btn-outline-dark rounded-pill mx-2 px-4 py-3 mb-2 mb-sm-0" id="btn3">Shop Now</a>
+          <a href="{% url 'home' %}#about-section" class="btn btn-outline-dark rounded-pill px-4 py-3" id="btn">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Image Column -->
+      <div class="col-12 col-lg-6 d-flex justify-content-center order-1 order-lg-2">
+        <div class="img-body">
+          <img src="{% static 'main/images/hero6.png' %}" alt="Agarbatti" class="img-fluid" style="max-height: 500px; max-height: 600px;" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about-section" class="about-section py-4 py-lg-5">
+  <div class="container">
+    <div class="row align-items-center g-4 g-lg-5">
+      <div class="col-12 col-md-6">
+        <div class="about-image">
+          <img src="{% static 'main/images/about_agarbatti.jpg' %}" alt="Aromatic Incense"
+            class="img-fluid rounded">
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <p class="text-uppercase text-muted mb-2">— About Us</p>
+        <h2 class="fw-bold display-5">Crafted with Care,<br>Built on <span class="highlight">Aroma</span></h2>
+        <p class="text-muted my-4">
+         <b> We offer high-quality Agarbatti & Dhoop Batti, made with natural ingredients for a soothing experience.</b>
+        </p>
+        <ul class="list-unstyled">
+          <li class="mb-3">
+            <i class="fa fa-check-circle" style="color:#f15a24"></i> Natural & Fragrant
+          </li>
+          <li class="mb-3">
+            <i class="fa fa-check-circle" style="color:#f15a24"></i> Wide Variety of Scents
+          </li>
+          <li class="mb-3">
+            <i class="fa fa-check-circle" style="color:#f15a24"></i> Special Offers Every Sunday
+          </li>
+        </ul>
+        <a href="{% url 'login' %}" class="learn-more">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED CATEGORIES -->
+<div class="container mt-4 mt-lg-5">
+  <h2 class="text-center mb-4 fw-bold">Featured Categories</h2>
+  <p class="text-center text-muted mb-5"><b>Discover our best-selling incense categories each crafted to fill your space with soothing aromas and timeless tranquility</b>.</p>
+  <div class="row px-2 px-md-4">
+    {% for category in featured_categories %}
+    <div class="col-12 col-sm-6 col-md-4 mb-4" style="min-height: 350px">
+      <div class="card h-100 border-0 shadow-sm hover-effect">
+        <div class="image-container">
+          {% if category.image %}
+          <img src="{{ category.image.url }}" class="card-img-top zoom-image" alt="{{ category.name }}"
+            style="height: 200px; object-fit: cover" />
+          {% else %}
+          <img src="{% static 'images/default-category.jpg' %}" class="card-img-top zoom-image" alt="No image"
+            style="height: 200px; object-fit: cover" />
+          {% endif %}
+        </div>
+        <div class="card-body text-center d-flex flex-column">
+          <h5 class="card-title fw-bold">{{ category.name }}</h5>
+          <p class="card-text text-muted flex-grow-1">{{ category.description|truncatechars:100 }}</p>
+          <a href="{% url 'product_list' %}?category={{ category.slug }}" class="btn btn-primary rounded-pill px-4 py-2 mt-auto"
+            id="btn3">Explore</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- POPULAR ITEMS -->
+{% if user.is_authenticated %}
+<div class="container mt-4 mt-lg-5">
+  <h2 class="text-center mb-4 fw-bold">Popular Products</h2>
+  <p class="text-center text-muted mb-5">Customers love these aromatic choices</p>
+  <div class="row justify-content-center">
+    {% for item in popular_products %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+      <div class="card border-0 text-center h-100 mx-auto" style="max-width: 320px">
+        <div class="position-relative image-container">
+          {% if item.image %}
+          <img src="{{ item.image.url }}" alt="{{ item.name }}" class="card-img-top product-image" />
+          {% else %}
+          <img src="{% static 'images/default-item.jpg' %}" alt="No image" class="card-img-top product-image" />
+          {% endif %}
+          <div class="price-badge">Rs.{{ item.price }}</div>
+        </div>
+        <div class="card-body px-2 d-flex flex-column">
+          <h5 class="fw-bold mt-2">{{ item.name }}</h5>
+          <p class="text-muted small mb-3 flex-grow-1">{{ item.description|truncatechars:60 }}</p>
+          <a href="{% url 'add_to_cart' item.id %}" class="btn btn-sm btn-primary rounded-pill px-4 py-2" id="btn3">
+            <i class="fas fa-cart-plus"></i> Add
+          </a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-center text-muted">No popular items found.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<!-- CONTACT SECTION -->
+<section id="contact-section" class="py-4 py-lg-5">
+  <div class="container py-4 py-lg-5">
+    <div class="row mb-4 mb-lg-5 text-center">
+      <div class="col">
+        <h1 class="fw-bold" style="color: #f15a24;">Get in Touch</h1>
+        <p class="text-muted"><b>We are committed to providing you with an exceptional experience. Whether you have a question about our products, feedback to share, or a suggestion for how we can improve, our team is ready to assist you.</b></p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-12 col-md-6">
+        <div class="p-3 p-md-4 rounded-4 shadow-sm border border-light bg-white">
+          <div class="mb-4">
+            <h5 class="fw-bold text-dark"><i class="fas fa-map-marker-alt me-2" style="color:#f65a08;"></i> Address</h5>
+            <p class="text-muted">Gulmi, Nepal</p>
+          </div>
+          <div class="mb-4">
+            <h5 class="fw-bold text-dark"><i class="fas fa-phone me-2" style="color:#f65a08;"></i> Phone</h5>
+            <p class="text-muted">+977 9841599846</p>
+          </div>
+          <div>
+            <h5 class="fw-bold text-dark"><i class="fas fa-envelope me-2" style="color:#f65a08;"></i> Email</h5>
+            <p class="text-muted">info@agarbattistore.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="p-3 p-md-4 rounded-4 shadow-sm border border-light bg-white">
+          <h4 class="mb-4 fw-bold text-dark">Send us a Message</h4>
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {% if success %}
+            <div class="alert alert-success">Thank you for contacting us! We will get back to you soon.</div>
+            {% endif %}
+            <div class="mb-3">
+              {{ form.name|attr:"class:form-control rounded-pill px-4 py-2"|attr:"placeholder:Your Name" }}
+              {% if form.name.errors %}
+              <div class="text-danger small">{{ form.name.errors }}</div>
+              {% endif %}
+            </div>
+            <div class="mb-3">
+              {{ form.email|attr:"class:form-control rounded-pill px-4 py-2"|attr:"placeholder:Your Email" }}
+              {% if form.email.errors %}
+              <div class="text-danger small">{{ form.email.errors }}</div>
+              {% endif %}
+            </div>
+            <div class="mb-3">
+              {{ form.subject|attr:"class:form-control rounded-pill px-4 py-2"|attr:"placeholder:Subject" }}
+              {% if form.subject.errors %}
+              <div class="text-danger small">{{ form.subject.errors }}</div>
+              {% endif %}
+            </div>
+            <div class="mb-3">
+              {{ form.message|attr:"class:form-control px-4 py-2 rounded-4"|attr:"placeholder:Your Message"|attr:"rows:5" }}
+              {% if form.message.errors %}
+              <div class="text-danger small">{{ form.message.errors }}</div>
+              {% endif %}
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary rounded-pill px-4 py-3" id="btn3">Send Message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.hover-effect {
+  transition: all 0.3s ease;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.hover-effect:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.category-badge, .discount-badge, .rating-badge {
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .display-4 {
+    font-size: 2rem;
+  }
+  
+  .display-5 {
+    font-size: 1.5rem;
+  }
+  
+  .btn {
+    width: 100%;
+    margin: 0.25rem 0;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .img-fluid {
+    max-height: 400px !important;
+  }
+  
+  .home-section .row {
+    text-align: center;
+  }
+}
+
+.price-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #f15a24;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+</style>
+
+{% endblock %}

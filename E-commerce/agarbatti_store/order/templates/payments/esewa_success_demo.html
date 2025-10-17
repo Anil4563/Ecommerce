@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Payment Successful - Demo{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card shadow border-0">
+                <div class="card-body p-5">
+                    <div class="mb-4">
+                        <i class="bi bi-check-circle-fill fs-1 text-success"></i>
+                    </div>
+                    <h3 class="mb-3">✅ Payment Successful!</h3>
+                    <p class="text-muted mb-4">Demo payment completed successfully.</p>
+                    
+                    <div class="alert alert-success">
+                        <p class="mb-0"><strong>Reference ID:</strong> DEMO-{{ order.id }}-SUCCESS</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p><strong>Order Number:</strong> {{ order.order_number }}</p>
+                        <p><strong>Amount Paid:</strong> Rs. {{ order.total }}</p>
+                        <p><strong>Status:</strong> <span class="badge bg-success">Paid</span></p>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'order_detail' order.id %}" class="btn btn-primary">View Order Details</a>
+                        <a href="{% url 'product_list' %}" class="btn btn-outline-secondary">Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
