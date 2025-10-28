@@ -12,7 +12,7 @@
                     <h3 class="mb-0">Checkout</h3>
                 </div>
                 <div class="card-body">
-                    <form method="POST" id="checkout-form">
+                    <form method="POST" id="checkout-form" novalidate>
                         {% csrf_token %}
 
                         <!-- Delivery Information -->
@@ -21,10 +21,25 @@
                             <label for="shipping_address" class="form-label">Delivery Address</label>
                             <textarea class="form-control" id="shipping_address" name="shipping_address" rows="3" required>{{ user.profile.address }}</textarea>
                         </div>
+
+                        <!-- Phone number validation -->
                         <div class="mb-3">
                             <label for="phone" class="form-label">Phone Number</label>
-                            <input type="text" class="form-control" id="phone" name="phone" value="{{ user.profile.phone }}" required>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="phone" 
+                                name="phone" 
+                                value="{{ user.profile.phone }}" 
+                                pattern="\d{10}" 
+                                maxlength="10" 
+                                required 
+                                title="Phone number must be exactly 10 digits"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10);"
+                            >
+                            <div class="form-text text-muted">Enter a 10-digit phone number.</div>
                         </div>
+
                         <div class="mb-3">
                             <label for="notes" class="form-label">Special Instructions <small class="text-muted">(Optional)</small></label>
                             <textarea class="form-control" id="notes" name="notes" rows="2"></textarea>
@@ -97,9 +112,12 @@
     </div>
 </div>
 
+<!-- JS validation for eSewa button and phone -->
 <script>
 const submitButton = document.getElementById('submit-button');
 const paymentRadios = document.querySelectorAll('input[name="payment_method"]');
+const form = document.getElementById('checkout-form');
+const phoneInput = document.getElementById('phone');
 
 paymentRadios.forEach(radio => {
     radio.addEventListener('change', () => {
@@ -111,6 +129,16 @@ paymentRadios.forEach(radio => {
             submitButton.classList.replace('btn-success', 'btn-primary');
         }
     });
+});
+
+// Extra client-side validation for phone
+form.addEventListener('submit', function (e) {
+    const phone = phoneInput.value.trim();
+    if (!/^\d{10}$/.test(phone)) {
+        e.preventDefault();
+        alert('Please enter a valid 10-digit phone number.');
+        phoneInput.focus();
+    }
 });
 </script>
 {% endblock %}

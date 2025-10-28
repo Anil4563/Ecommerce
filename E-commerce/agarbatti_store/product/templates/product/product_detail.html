@@ -2,76 +2,135 @@
 {% block title %}{{ product.name }} - AromaStore{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <div class="row g-5 align-items-center">
+<div class="container py-4">
+      <div class="row g-5">
+        <!-- Product Image Section -->
         <div class="col-lg-6">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded shadow" style="max-height: 500px; width: 100%; object-fit: cover;">
+            <div class="product-image-container position-relative">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded shadow-sm" id="main-product-image">
+            </div>
         </div>
+
+        <!-- Product Details Section -->
         <div class="col-lg-6">
-            <h1 class="display-5 fw-bold">{{ product.name }}</h1>
-
-            {% if product.weight %}
-            <span class="badge bg-secondary fs-6 mb-2">Weight: {{ product.weight }}</span><br>
-            {% endif %}
-            {% if product.burn_time %}
-            <span class="badge bg-info fs-6 mb-2">Burn Time: {{ product.burn_time }}</span><br>
-            {% endif %}
-            {% if product.fragrance %}
-            <span class="badge bg-warning fs-6 mb-3">Fragrance: {{ product.fragrance }}</span>
-            {% endif %}
-
-            <h3 class="text-primary fw-semibold mb-4">Rs.{{ product.price }}</h3>
-
-            <div class="mb-4">
-                <h5 class="fw-bold">Description</h5>
-                <p class="text-muted">{{ product.description }}</p>
-            </div>
-
-            <div class="mb-4">
-                <h5 class="fw-bold">Category</h5>
-                <p class="text-muted">{{ product.category.name }}</p>
-            </div>
-
-            {% if user.is_authenticated %}
-            <form method="post" action="{% url 'add_to_cart' product.id %}">
-                {% csrf_token %}
-                <div class="row g-3 align-items-center mb-4">
-                    <div class="col-auto">
-                        <label for="quantity" class="col-form-label fw-semibold">Quantity</label>
-                    </div>
-                    <div class="col-auto">
-                        <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" style="width: 100px;">
+            <div class="product-details">
+                <h1 class="display-6 fw-bold mb-2">{{ product.name }}</h1>
+                
+                <!-- Product Specifications -->
+                <div class="specifications mb-4">
+                    <div class="row g-3">
+                        {% if product.weight %}
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-weight-hanging text-muted me-2"></i>
+                                <div>
+                                    <small class="text-muted">Weight</small>
+                                    <p class="mb-0 fw-semibold">{{ product.weight }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if product.burn_time %}
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-clock text-muted me-2"></i>
+                                <div>
+                                    <small class="text-muted">Burn Time</small>
+                                    <p class="mb-0 fw-semibold">{{ product.burn_time }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if product.fragrance %}
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-wind text-muted me-2"></i>
+                                <div>
+                                    <small class="text-muted">Fragrance</small>
+                                    <p class="mb-0 fw-semibold">{{ product.fragrance }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
-                <button type="submit" class="btn btn-lg btn-primary shadow-sm">
-                    <i class="fas fa-cart-plus me-2"></i>Add to Cart
-                </button>
-            </form>
-            {% else %}
-            <div class="alert alert-info mt-4">
-                Please <a href="{% url 'login' %}" class="alert-link">login</a> to add products to your cart.
+                
+                <!-- Pricing -->
+                <div class="mb-4">
+                    <h2 class="text-primary fw-bold">Rs.{{ product.price }}</h2>
+                </div>
+                
+                <!-- Product Description -->
+                <div class="mb-4">
+                    <h5 class="fw-bold mb-3">Description</h5>
+                    <p class="text-muted lh-lg">{{ product.description }}</p>
+                </div>
+
+                <!-- Category -->
+                <div class="mb-4">
+                    <h5 class="fw-bold mb-2">Category</h5>
+                    <p class="text-muted">{{ product.category.name }}</p>
+                </div>
+                
+                <!-- Add to Cart Section -->
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'add_to_cart' product.id %}">
+                    {% csrf_token %}
+                    <div class="row g-3 align-items-center mb-4">
+                        <div class="col-auto">
+                            <label for="quantity" class="col-form-label fw-semibold">Quantity</label>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group" style="width: 140px;">
+                                <button type="button" class="btn btn-outline-secondary" onclick="decrementQuantity()">-</button>
+                                <input type="number" class="form-control text-center" id="quantity" name="quantity" value="1" min="1" max="10">
+                                <button type="button" class="btn btn-outline-secondary" onclick="incrementQuantity()">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3">
+                        <button type="submit" class="btn btn-primary btn-lg flex-grow-1 shadow-sm">
+                            <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                        </button>
+                    </div>
+                </form>
+                {% else %}
+                <div class="alert alert-info mt-4">
+                    Please <a href="{% url 'login' %}" class="alert-link">login</a> to add products to your cart.
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
     </div>
-
-    {% if related_items %}
+    <!-- Related Products -->
+    {% if related_products %}
     <div class="row mt-5">
         <div class="col-12">
             <h3 class="mb-4 fw-semibold">You Might Also Like</h3>
             <div class="row g-4">
-                {% for item in related_items %}
+                {% for item in related_products %}
                 <div class="col-md-3">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <img src="{{ item.image.url }}" class="card-img-top rounded-top" alt="{{ item.name }}" style="height: 150px; object-fit: cover;">
-                        <div class="card-body">
+                    <div class="card h-100 border-0 shadow-sm product-card">
+                        <div class="position-relative">
+                            <img src="{{ item.image.url }}" class="card-img-top rounded-top" alt="{{ item.name }}" style="height: 200px; object-fit: cover;">
+                        </div>
+                        <div class="card-body d-flex flex-column">
                             <h5 class="card-title mb-2">{{ item.name }}</h5>
-                            <p class="text-muted mb-2">Rs.{{ item.price }}</p>
-                            <div class="d-grid gap-2">
-                                <a href="{% url 'product_detail' item.slug %}" class="btn btn-sm btn-outline-primary">View</a>
-                                {% if user.is_authenticated %}
-                                <a href="{% url 'add_to_cart' item.id %}" class="btn btn-sm btn-primary">Add to Cart</a>
-                                {% endif %}
+                            <div class="mb-2">
+                                <span class="text-primary fw-bold">Rs.{{ item.price }}</span>
+                            </div>
+                            {% if item.fragrance %}
+                            <p class="text-muted small mb-3">{{ item.fragrance }}</p>
+                            {% endif %}
+                            <div class="mt-auto">
+                                <div class="d-grid gap-2">
+                                    <a href="{% url 'product_detail' item.slug %}" class="btn btn-sm btn-outline-primary">View Details</a>
+                                    {% if user.is_authenticated %}
+                                    <a href="{% url 'add_to_cart' item.id %}" class="btn btn-sm btn-primary">Add to Cart</a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -82,4 +141,38 @@
     </div>
     {% endif %}
 </div>
+
+<script>
+    // Quantity increment/decrement functionality
+    function incrementQuantity() {
+        const quantityInput = document.getElementById('quantity');
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue < 10) {
+            quantityInput.value = currentValue + 1;
+        }
+    }
+    
+    function decrementQuantity() {
+        const quantityInput = document.getElementById('quantity');
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+        }
+    }
+</script>
+
+<style>
+    .product-image-container {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .product-card {
+        transition: transform 0.3s ease;
+    }
+    
+    .product-card:hover {
+        transform: translateY(-5px);
+    }
+</style>
 {% endblock %}

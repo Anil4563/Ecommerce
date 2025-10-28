@@ -36,7 +36,8 @@ class Trie:
             words.extend(self._get_words_from_node(child_node, prefix + char))
         return words
 
-# List of products
+
+# List of products with filters
 class ProductListView(ListView):
     model = Product
     template_name = 'product/product_list.html'
@@ -60,16 +61,36 @@ class ProductListView(ListView):
             # Filter queryset by matched names
             queryset = queryset.filter(name__in=matched_names)
 
+        # Category filter
         category_slug = self.request.GET.get('category')
         if category_slug:
             queryset = queryset.filter(category__slug=category_slug)
+
+        # Fragrance filter
+        fragrance = self.request.GET.get('fragrance')
+        if fragrance:
+            queryset = queryset.filter(fragrance=fragrance)
+
+        # Burn time filter
+        burn_time = self.request.GET.get('burn_time')
+        if burn_time:
+            queryset = queryset.filter(burn_time=burn_time)
 
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
+
+        # Provide unique options for dropdowns
+        context['fragrances'] = Product.objects.values_list('fragrance', flat=True).distinct()
+        context['burn_times'] = Product.objects.values_list('burn_time', flat=True).distinct()
+
+        # Preserve search query in template
+        context['q'] = self.request.GET.get('q', '')
+
         return context
+
 
 # Product detail view
 class ProductDetailView(DetailView):
@@ -86,6 +107,7 @@ class ProductDetailView(DetailView):
             is_available=True
         ).exclude(id=self.object.id)[:4]
         return context
+
 
 # Category list view
 class CategoryListView(ListView):
