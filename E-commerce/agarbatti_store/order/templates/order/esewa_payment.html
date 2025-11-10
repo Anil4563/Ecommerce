@@ -1,0 +1,251 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}eSewa Payment - Agarbatti Store{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">🔒 eSewa Payment</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Display messages -->
+                    {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Order Summary</h5>
+                            <div class="border rounded p-3">
+                                <p><strong>Order ID:</strong> {{ order.order_number }}</p>
+                                <p><strong>Product Amount:</strong> Rs. {{ order.total }}</p>
+                                <p><strong>Tax Amount (13%):</strong> Rs. {{ tax_amount }}</p>
+                                <p><strong>Total Amount:</strong> Rs. {{ total_amount }}</p>
+                            </div>
+                            
+                            <!-- Merchant Info -->
+                            <div class="mt-3 border rounded p-3 bg-light">
+                                <h6>Merchant Information</h6>
+                                <p class="mb-1"><strong>Merchant:</strong> Agarbatti Store</p>
+                                <p class="mb-0"><strong>Payment Gateway:</strong> eSewa</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-center mb-3">
+                                <img src="https://esewa.com.np/common/images/esewa_logo.png" alt="eSewa" class="img-fluid" style="max-height: 60px;">
+                                <p class="text-muted mt-2">Secure Payment Gateway</p>
+                            </div>
+                            
+                            <!-- Real eSewa Style Payment Form -->
+                            <form id="esewaPaymentForm" method="POST">
+                                {% csrf_token %}
+                                
+                                <!-- User Input Fields -->
+                                <div class="form-group mb-3">
+                                    <label for="mobileNumber" class="form-label fw-bold">Mobile Number</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">+977</span>
+                                        <input type="tel" class="form-control form-control-lg" id="mobileNumber" name="mobileNumber" 
+                                               placeholder="9800000000" pattern="[0-9]{10}" required
+                                               oninput="formatMobileNumber(this)">
+                                    </div>
+                                    <small class="form-text text-muted">Enter your 10-digit eSewa registered mobile number</small>
+                                </div>
+                                
+                                <div class="form-group mb-4">
+                                    <label for="mpin" class="form-label fw-bold">MPIN</label>
+                                    <input type="password" class="form-control form-control-lg" id="mpin" name="mpin" 
+                                           placeholder="Enter 4-6 digit MPIN" pattern="[0-9]{4,6}" maxlength="6" required
+                                           oninput="formatMPIN(this)">
+                                    <small class="form-text text-muted">Enter your eSewa MPIN to authorize payment</small>
+                                </div>
+                                
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" id="rememberDevice" name="rememberDevice">
+                                    <label class="form-check-label" for="rememberDevice">
+                                        <i class="fas fa-lock"></i> Remember this device for 30 days
+                                    </label>
+                                </div>
+                                
+                                <!-- Payment Button -->
+                                <button type="submit" class="btn btn-success btn-lg w-100 py-3 fw-bold">
+                                    <i class="fas fa-lock"></i> Pay Rs. {{ total_amount }} with eSewa
+                                </button>
+                            </form>
+                            
+                            <!-- Quick Test Buttons -->
+                            <div class="mt-3 text-center">
+                                <small class="text-muted">Quick test:</small>
+                                <div class="btn-group btn-group-sm mt-1" role="group">
+                                    <button type="button" class="btn btn-outline-primary" onclick="fillTestCredentials()">
+                                        Fill Test Data
+                                    </button>
+                                    <button type="button" class="btn btn-outline-success" onclick="fillWrongMPIN()">
+                                        Test Wrong MPIN
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center mt-3">
+                                <a href="#" class="text-decoration-none text-primary">
+                                    <i class="fas fa-key"></i> Forgot MPIN?
+                                </a>
+                                <span class="mx-2">|</span>
+                                <a href="#" class="text-decoration-none text-primary">
+                                    <i class="fas fa-question-circle"></i> Help
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Test Credentials -->
+                    <div class="mt-4">
+                        <div class="alert alert-info">
+                            <h6><i class="fas fa-vial"></i> Test Credentials</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>Valid MPINs (Success):</strong></p>
+                                    <p class="mb-1">1234, 123456, 1111, 0000</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>Invalid MPINs (Failure):</strong></p>
+                                    <p class="mb-0">9999, 5555, 2222, etc.</p>
+                                </div>
+                            </div>
+                            <small class="text-muted">Use valid MPINs for success, invalid ones for failure</small>
+                        </div>
+                    </div>
+
+                    <!-- Security Information -->
+                    <div class="mt-3">
+                        <div class="alert alert-warning">
+                            <h6><i class="fas fa-shield-alt"></i> Payment Security</h6>
+                            <p class="mb-0 small">
+                                <i class="fas fa-check text-success"></i> Your payment is secured with eSewa's encryption technology<br>
+                                <i class="fas fa-check text-success"></i> We do not store your MPIN or sensitive information<br>
+                                <i class="fas fa-check text-success"></i> All transactions are processed through secure payment gateway
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Processing Modal -->
+<div class="modal fade" id="processingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center py-4">
+                <div class="spinner-border text-primary mb-3" role="status"></div>
+                <h5>Processing Payment</h5>
+                <p class="mb-0">Verifying your MPIN with eSewa...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function processESewaPayment() {
+    const mobile = document.getElementById('mobileNumber').value;
+    const mpin = document.getElementById('mpin').value;
+    
+    // Validate mobile number
+    if (!/^(98|97)\d{8}$/.test(mobile)) {
+        showAlert('error', 'Please enter a valid 10-digit Nepali mobile number starting with 97 or 98');
+        return false;
+    }
+    
+    // Validate MPIN
+    if (!/^\d{4,6}$/.test(mpin)) {
+        showAlert('error', 'Please enter a valid 4-6 digit MPIN');
+        return false;
+    }
+    
+    // Show processing modal
+    const processingModal = new bootstrap.Modal(document.getElementById('processingModal'));
+    processingModal.show();
+    
+    // Form will submit after validation
+    return true;
+}
+
+function fillTestCredentials() {
+    document.getElementById('mobileNumber').value = '9800000000';
+    document.getElementById('mpin').value = '1234';
+    showAlert('success', 'Valid test credentials filled. This MPIN will work!');
+}
+
+function fillWrongMPIN() {
+    document.getElementById('mobileNumber').value = '9800000000';
+    document.getElementById('mpin').value = '9999';
+    showAlert('warning', 'Invalid MPIN filled. This will show payment failure!');
+}
+
+function formatMobileNumber(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 10) value = value.substring(0, 10);
+    input.value = value;
+}
+
+function formatMPIN(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 6) value = value.substring(0, 6);
+    input.value = value;
+}
+
+function showAlert(type, message) {
+    // Remove existing alerts
+    const existingAlerts = document.querySelectorAll('.alert-dismissible');
+    existingAlerts.forEach(alert => alert.remove());
+    
+    // Create alert element
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show mt-3`;
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    // Add to page
+    document.querySelector('.card-body').prepend(alertDiv);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (alertDiv.parentElement) {
+            alertDiv.remove();
+        }
+    }, 5000);
+}
+
+// Form submission handler
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('esewaPaymentForm');
+    
+    form.addEventListener('submit', function(e) {
+        // Validate before submission
+        if (!processESewaPayment()) {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Form will submit normally after validation passes
+        return true;
+    });
+});
+</script>
+{% endblock %}

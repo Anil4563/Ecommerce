@@ -6,28 +6,28 @@
 {% block content %}
 
 <!-- HOME SECTION -->
-<section id="home-section" class="d-flex align-items-center py-5">
+<section id="home-section" class="d-flex align-items-center py-3 py-md-4 py-lg-5">
   <div class="container">
     <div class="row d-flex align-items-center justify-content-center">
       <!-- Text Column -->
-      <div class="col-12 col-lg-6 p-3 p-lg-5 ps-lg-5 order-2 order-lg-1">
-        <h1 class="display-4 display-lg-1 fw-normal">Premium Agarbatti & Dhoop Batti,</h1>
-        <p class="display-5 display-lg-3 fw-normal">
+      <div class="col-12 col-lg-6 p-2 p-md-3 p-lg-5 ps-lg-5 order-2 order-lg-1">
+        <h1 class="display-4 display-md-3 display-lg-1 fw-normal">Premium Agarbatti & Dhoop Batti,</h1>
+        <p class="display-5 display-md-4 display-lg-3 fw-normal">
           <span style="font-weight: bold">Just </span> a Click Away
         </p>
-        <p class="fw-light mb-4">
+        <p class="fw-light mb-3 mb-md-4">
          <b>Browse our wide range of aromatic incense sticks, place your order in just a few clicks, and enjoy the soothing fragrances delivered straight to your home.</b>
         </p>
         <div class="d-flex flex-column flex-sm-row">
-          <a href="{% url 'product_list' %}" class="btn btn-outline-dark rounded-pill mx-2 px-4 py-3 mb-2 mb-sm-0" id="btn3">Shop Now</a>
-          <a href="{% url 'home' %}#about-section" class="btn btn-outline-dark rounded-pill px-4 py-3" id="btn">Learn More</a>
+          <a href="{% url 'product_list' %}" class="btn btn-outline-dark rounded-pill mx-1 mx-sm-2 px-3 px-md-4 py-2 py-md-3 mb-2 mb-sm-0" id="btn3">Shop Now</a>
+          <a href="{% url 'home' %}#about-section" class="btn btn-outline-dark rounded-pill px-3 px-md-4 py-2 py-md-3" id="btn">Learn More</a>
         </div>
       </div>
 
       <!-- Image Column -->
       <div class="col-12 col-lg-6 d-flex justify-content-center order-1 order-lg-2">
         <div class="img-body">
-          <img src="{% static 'main/images/hero6.png' %}" alt="Agarbatti" class="img-fluid" style="max-height: 500px; max-height: 600px;" />
+          <img src="{% static 'main/images/hero6.png' %}" alt="Agarbatti" class="img-fluid" style="max-height: 400px; max-height: 500px;" />
         </div>
       </div>
     </div>
@@ -35,9 +35,9 @@
 </section>
 
 <!-- ABOUT SECTION -->
-<section id="about-section" class="about-section py-4 py-lg-5">
+<section id="about-section" class="about-section py-3 py-md-4 py-lg-5">
   <div class="container">
-    <div class="row align-items-center g-4 g-lg-5">
+    <div class="row align-items-center g-3 g-md-4 g-lg-5">
       <div class="col-12 col-md-6">
         <div class="about-image">
           <img src="{% static 'main/images/ganesh1.png' %}" alt="Aromatic Incense"
@@ -45,19 +45,19 @@
         </div>
       </div>
       <div class="col-12 col-md-6">
-        <p class="text-uppercase text-muted mb-2">— About Us</p>
-        <h2 class="fw-bold display-5">Crafted with Care,<br>Built on <span class="highlight">Aroma</span></h2>
-        <p class="text-muted my-4">
+        <p class="text-uppercase text-muted mb-1 mb-md-2">— About Us</p>
+        <h2 class="fw-bold display-5 display-md-4 display-lg-3">Crafted with Care,<br>Built on <span class="highlight">Aroma</span></h2>
+        <p class="text-muted my-3 my-md-4">
          <b> We offer high-quality Agarbatti & Dhoop Batti, made with natural ingredients for a soothing experience.</b>
         </p>
         <ul class="list-unstyled">
-          <li class="mb-3">
+          <li class="mb-2 mb-md-3">
             <i class="fa fa-check-circle" style="color:#f15a24"></i> Natural & Fragrant
           </li>
-          <li class="mb-3">
+          <li class="mb-2 mb-md-3">
             <i class="fa fa-check-circle" style="color:#f15a24"></i> Wide Variety of Scents
           </li>
-          <li class="mb-3">
+          <li class="mb-2 mb-md-3">
             <i class="fa fa-check-circle" style="color:#f15a24"></i> Special Offers Every Sunday
           </li>
         </ul>
@@ -68,26 +68,26 @@
 </section>
 
 <!-- FEATURED CATEGORIES -->
-<div class="container mt-4 mt-lg-5">
-  <h2 class="text-center mb-4 fw-bold">Featured Categories</h2>
-  <p class="text-center text-muted mb-5"><b>Discover our best-selling incense categories each crafted to fill your space with soothing aromas and timeless tranquility</b>.</p>
-  <div class="row px-2 px-md-4">
+<div class="container mt-3 mt-md-4 mt-lg-5">
+  <h2 class="text-center mb-3 mb-md-4 fw-bold display-5 display-md-4 display-lg-3">Featured Categories</h2>
+  <p class="text-center text-muted mb-4 mb-md-5 px-2 px-md-0"><b>Discover our best-selling incense categories each crafted to fill your space with soothing aromas and timeless tranquility</b>.</p>
+  <div class="row px-1 px-md-2 px-lg-4">
     {% for category in featured_categories %}
-    <div class="col-12 col-sm-6 col-md-4 mb-4" style="min-height: 350px">
+    <div class="col-12 col-sm-6 col-md-4 mb-3 mb-md-4" style="min-height: 320px">
       <div class="card h-100 border-0 shadow-sm hover-effect">
         <div class="image-container">
           {% if category.image %}
           <img src="{{ category.image.url }}" class="card-img-top zoom-image" alt="{{ category.name }}"
-            style="height: 200px; object-fit: cover" />
+            style="height: 180px; object-fit: cover" />
           {% else %}
           <img src="{% static 'images/default-category.jpg' %}" class="card-img-top zoom-image" alt="No image"
-            style="height: 200px; object-fit: cover" />
+            style="height: 180px; object-fit: cover" />
           {% endif %}
         </div>
-        <div class="card-body text-center d-flex flex-column">
+        <div class="card-body text-center d-flex flex-column px-2 px-md-3">
           <h5 class="card-title fw-bold">{{ category.name }}</h5>
-          <p class="card-text text-muted flex-grow-1">{{ category.description|truncatechars:100 }}</p>
-          <a href="{% url 'product_list' %}?category={{ category.slug }}" class="btn btn-primary rounded-pill px-4 py-2 mt-auto"
+          <p class="card-text text-muted flex-grow-1 small">{{ category.description|truncatechars:80 }}</p>
+          <a href="{% url 'product_list' %}?category={{ category.slug }}" class="btn btn-primary rounded-pill px-3 px-md-4 py-2 mt-auto"
             id="btn3">Explore</a>
         </div>
       </div>
@@ -98,13 +98,13 @@
 
 <!-- POPULAR ITEMS -->
 {% if user.is_authenticated %}
-<div class="container mt-4 mt-lg-5">
-  <h2 class="text-center mb-4 fw-bold">Popular Products</h2>
-  <p class="text-center text-muted mb-5">Customers love these aromatic choices</p>
-  <div class="row justify-content-center">
+<div class="container mt-3 mt-md-4 mt-lg-5">
+  <h2 class="text-center mb-3 mb-md-4 fw-bold display-5 display-md-4 display-lg-3">Popular Products</h2>
+  <p class="text-center text-muted mb-4 mb-md-5 px-2 px-md-0">Customers love these aromatic choices</p>
+  <div class="row justify-content-center px-1 px-md-0">
     {% for item in popular_products %}
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-      <div class="card border-0 text-center h-100 mx-auto" style="max-width: 320px">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 mb-md-4">
+      <div class="card border-0 text-center h-100 mx-auto" style="max-width: 300px">
         <div class="position-relative image-container">
           {% if item.image %}
           <img src="{{ item.image.url }}" alt="{{ item.name }}" class="card-img-top product-image" />
@@ -116,7 +116,7 @@
         <div class="card-body px-2 d-flex flex-column">
           <h5 class="fw-bold mt-2">{{ item.name }}</h5>
           <p class="text-muted small mb-3 flex-grow-1">{{ item.description|truncatechars:60 }}</p>
-          <a href="{% url 'add_to_cart' item.id %}" class="btn btn-sm btn-primary rounded-pill px-4 py-2" id="btn3">
+          <a href="{% url 'add_to_cart' item.id %}" class="btn btn-sm btn-primary rounded-pill px-3 px-md-4 py-2" id="btn3">
             <i class="fas fa-cart-plus"></i> Add
           </a>
         </div>
@@ -130,22 +130,22 @@
 {% endif %}
 
 <!-- CONTACT SECTION -->
-<section id="contact-section" class="py-4 py-lg-5">
-  <div class="container py-4 py-lg-5">
-    <div class="row mb-4 mb-lg-5 text-center">
+<section id="contact-section" class="py-3 py-md-4 py-lg-5">
+  <div class="container py-3 py-md-4 py-lg-5">
+    <div class="row mb-3 mb-md-4 mb-lg-5 text-center">
       <div class="col">
-        <h1 class="fw-bold" style="color: #f15a24;">Get in Touch</h1>
-        <p class="text-muted"><b>We are committed to providing you with an exceptional experience. Whether you have a question about our products, feedback to share, or a suggestion for how we can improve, our team is ready to assist you.</b></p>
+        <h1 class="fw-bold display-5 display-md-4 display-lg-3" style="color: #f15a24;">Get in Touch</h1>
+        <p class="text-muted px-2 px-md-0"><b>We are committed to providing you with an exceptional experience. Whether you have a question about our products, feedback to share, or a suggestion for how we can improve, our team is ready to assist you.</b></p>
       </div>
     </div>
-    <div class="row g-4">
+    <div class="row g-3 g-md-4">
       <div class="col-12 col-md-6">
-        <div class="p-3 p-md-4 rounded-4 shadow-sm border border-light bg-white">
-          <div class="mb-4">
+        <div class="p-2 p-md-3 p-lg-4 rounded-4 shadow-sm border border-light bg-white">
+          <div class="mb-3 mb-md-4">
             <h5 class="fw-bold text-dark"><i class="fas fa-map-marker-alt me-2" style="color:#f65a08;"></i> Address</h5>
             <p class="text-muted">Gulmi, Nepal</p>
           </div>
-          <div class="mb-4">
+          <div class="mb-3 mb-md-4">
             <h5 class="fw-bold text-dark"><i class="fas fa-phone me-2" style="color:#f65a08;"></i> Phone</h5>
             <p class="text-muted">+977 9841599846</p>
           </div>
@@ -153,42 +153,51 @@
             <h5 class="fw-bold text-dark"><i class="fas fa-envelope me-2" style="color:#f65a08;"></i> Email</h5>
             <p class="text-muted">info@agarbattistore.com</p>
           </div>
+          <div class="mb-3 mb-md-4">
+            <h5 class="fw-bold text-dark"><i class="fas fa-phone me-2" style="color:#f65a08;"></i> Office Phone.No</h5>
+            <p class="text-muted">+06117890</p>
+          </div>
+          <div class="mb-3 mb-md-4">
+            <h5 class="fw-bold text-dark"><i class="fas fa-map-marker-alt me-2" style="color:#f65a08;"></i> Office Location</h5>
+            <p class="text-muted">Baneshwor, Kathmandu</p>
+          </div>
+          
         </div>
       </div>
       <div class="col-12 col-md-6">
-        <div class="p-3 p-md-4 rounded-4 shadow-sm border border-light bg-white">
-          <h4 class="mb-4 fw-bold text-dark">Send us a Message</h4>
+        <div class="p-2 p-md-3 p-lg-4 rounded-4 shadow-sm border border-light bg-white">
+          <h4 class="mb-3 mb-md-4 fw-bold text-dark">Send us a Message</h4>
           <form method="post" novalidate>
             {% csrf_token %}
             {% if success %}
             <div class="alert alert-success">Thank you for contacting us! We will get back to you soon.</div>
             {% endif %}
             <div class="mb-3">
-              {{ form.name|attr:"class:form-control rounded-pill px-4 py-2"|attr:"placeholder:Your Name" }}
+              {{ form.name|attr:"class:form-control rounded-pill px-3 px-md-4 py-2"|attr:"placeholder:Your Name" }}
               {% if form.name.errors %}
               <div class="text-danger small">{{ form.name.errors }}</div>
               {% endif %}
             </div>
             <div class="mb-3">
-              {{ form.email|attr:"class:form-control rounded-pill px-4 py-2"|attr:"placeholder:Your Email" }}
+              {{ form.email|attr:"class:form-control rounded-pill px-3 px-md-4 py-2"|attr:"placeholder:Your Email" }}
               {% if form.email.errors %}
               <div class="text-danger small">{{ form.email.errors }}</div>
               {% endif %}
             </div>
             <div class="mb-3">
-              {{ form.subject|attr:"class:form-control rounded-pill px-4 py-2"|attr:"placeholder:Subject" }}
+              {{ form.subject|attr:"class:form-control rounded-pill px-3 px-md-4 py-2"|attr:"placeholder:Subject" }}
               {% if form.subject.errors %}
               <div class="text-danger small">{{ form.subject.errors }}</div>
               {% endif %}
             </div>
             <div class="mb-3">
-              {{ form.message|attr:"class:form-control px-4 py-2 rounded-4"|attr:"placeholder:Your Message"|attr:"rows:5" }}
+              {{ form.message|attr:"class:form-control px-3 px-md-4 py-2 rounded-4"|attr:"placeholder:Your Message"|attr:"rows:4" }}
               {% if form.message.errors %}
               <div class="text-danger small">{{ form.message.errors }}</div>
               {% endif %}
             </div>
             <div class="d-grid">
-              <button type="submit" class="btn btn-primary rounded-pill px-4 py-3" id="btn3">Send Message</button>
+              <button type="submit" class="btn btn-primary rounded-pill px-3 px-md-4 py-2 py-md-3" id="btn3">Send Message</button>
             </div>
           </form>
         </div>
@@ -215,14 +224,26 @@
   font-weight: bold;
 }
 
+.price-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #f15a24;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
 
+/* Responsive Typography */
 @media (max-width: 576px) {
   .display-4 {
-    font-size: 2rem;
+    font-size: 1.8rem !important;
   }
   
   .display-5 {
-    font-size: 1.5rem;
+    font-size: 1.4rem !important;
   }
   
   .btn {
@@ -233,27 +254,58 @@
   .card-body {
     padding: 1rem;
   }
+  
+  .img-fluid {
+    max-height: 300px !important;
+  }
 }
 
 @media (max-width: 768px) {
   .img-fluid {
-    max-height: 400px !important;
+    max-height: 350px !important;
   }
   
   .home-section .row {
     text-align: center;
   }
+  
+  .display-md-3 {
+    font-size: 2.2rem;
+  }
+  
+  .display-md-4 {
+    font-size: 1.8rem;
+  }
 }
 
-.price-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #f15a24;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-weight: bold;
+@media (max-width: 992px) {
+  .card-img-top {
+    height: 160px !important;
+  }
+  
+  .display-lg-1 {
+    font-size: 3rem;
+  }
+  
+  .display-lg-3 {
+    font-size: 2.2rem;
+  }
+}
+
+/* Improved spacing for all screen sizes */
+.container, .container-fluid {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.row {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 </style>
 

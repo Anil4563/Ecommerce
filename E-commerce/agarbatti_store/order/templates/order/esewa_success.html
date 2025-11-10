@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Payment Successful - Agarbatti Store{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0 text-center">
+                <div class="card-body py-5">
+                    <div class="text-success mb-4">
+                        <i class="fas fa-check-circle fa-5x"></i>
+                    </div>
+                    <h2 class="card-title">Payment Successful!</h2>
+                    <p class="card-text">Thank you for your purchase. Your order has been confirmed.</p>
+                    
+                    <div class="border rounded p-3 my-4 text-left bg-light">
+                        <p><strong>Order ID:</strong> {{ order.order_number }}</p>
+                        <p><strong>Reference ID:</strong> {{ order.esewa_ref_id }}</p>
+                        <p><strong>Amount Paid:</strong> Rs. {{ order.total }}</p>
+                        <p><strong>Status:</strong> <span class="text-success">Paid</span></p>
+                    </div>
+                    
+                    <p>You will receive order confirmation shortly.</p>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'order_detail' order.id %}" class="btn btn-primary">View Order Details</a>
+                        <a href="{% url 'home' %}" class="btn btn-outline-secondary">Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

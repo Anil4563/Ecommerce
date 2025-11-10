@@ -1,0 +1,459 @@
+
+/* AgarBatti Admin - Custom Orange & White Theme */
+:root {
+    --agarbatti-orange: #f65a08;
+    --agarbatti-orange-light: #ff7b3a;
+    --agarbatti-orange-dark: #e04a00;
+    --agarbatti-white: white;
+    --agarbatti-light: #ffffff;
+    --agarbatti-gray: #6C757D;
+    --agarbatti-dark: #343A40;
+}
+
+/* Global Background */
+body {
+    background-color: var(--agarbatti-white) !important;
+}
+
+/* Header - Clean Orange Gradient */
+.main-header .navbar {
+    background: linear-gradient(135deg, var(--agarbatti-orange) 0%, var(--agarbatti-orange-light) 100%) !important;
+    border: none !important;
+    box-shadow: 0 2px 10px rgba(246, 90, 8, 0.2);
+}
+
+.navbar-brand {
+    font-weight: 700 !important;
+    font-size: 24px !important;
+    color: rgba(255, 255, 255, 0.081) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-nav .nav-link {
+    color: rgba(234, 98, 7, 0.965) !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: rgb(255, 255, 255) !important;
+    transform: translateY(-1px);
+}
+
+/* Sidebar - Clean White with Orange Accents */
+.main-sidebar {
+    background: var(--agarbatti-white) !important;
+    border-right: 1px solid #e3e6f0 !important;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-light-warning .nav-sidebar > .nav-item > .nav-link {
+    color: var(--agarbatti-dark) !important;
+    border-left: 4px solid transparent;
+    margin: 2px 0;
+    transition: all 0.3s ease;
+}
+
+.sidebar-light-warning .nav-sidebar > .nav-item > .nav-link:hover {
+    background: linear-gradient(90deg, rgba(246, 90, 8, 0.1) 0%, transparent 100%) !important;
+    color: var(--agarbatti-orange) !important;
+    border-left: 4px solid var(--agarbatti-orange);
+}
+
+.sidebar-light-warning .nav-sidebar > .nav-item > .nav-link.active {
+    background: linear-gradient(90deg, var(--agarbatti-orange) 0%, transparent 100%) !important;
+    color: white !important;
+    border-left: 4px solid var(--agarbatti-orange-dark);
+    font-weight: 600;
+}
+
+/* Content Area - Clean White */
+.content-wrapper {
+    background: var(--agarbatti-white) !important;
+}
+
+/* Cards - Clean Design with Orange Headers */
+.card {
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--agarbatti-orange) 0%, var(--agarbatti-orange-light) 100%) !important;
+    color: white !important;
+    border-radius: 12px 12px 0 0 !important;
+    border: none !important;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* Buttons - Orange Theme */
+.btn-primary {
+    background: linear-gradient(135deg, var(--agarbatti-orange) 0%, var(--agarbatti-orange-light) 100%) !important;
+    border: none !important;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--agarbatti-orange-dark) 0%, var(--agarbatti-orange) 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(246, 90, 8, 0.3);
+}
+
+.btn-warning {
+    background: var(--agarbatti-orange) !important;
+    border: none !important;
+    border-radius: 8px;
+    color: white !important;
+    font-weight: 500;
+}
+
+.btn-warning:hover {
+    background: var(--agarbatti-orange-dark) !important;
+    transform: translateY(-1px);
+}
+
+/* Login Page - Clean Orange & White */
+.login-page {
+    background: var(--agarbatti-white) !important;
+}
+
+.login-box {
+    border: none !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 30px rgba(246, 90, 8, 0.15);
+    background: white !important;
+}
+
+.login-logo a {
+    color: var(--agarbatti-orange) !important;
+    font-weight: 700;
+    font-size: 32px;
+}
+
+.login-card-body {
+    border: none !important;
+    border-radius: 16px;
+}
+
+/* Tables - Clean Design */
+.table {
+    background: white !important;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.table thead th {
+    background: linear-gradient(135deg, var(--agarbatti-orange) 0%, var(--agarbatti-orange-light) 100%) !important;
+    color: white !important;
+    border: none !important;
+    font-weight: 600;
+    padding: 15px 12px;
+}
+
+.table tbody td {
+    border-color: #f8f9fa !important;
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(246, 90, 8, 0.04) !important;
+}
+
+/* Form Elements */
+.form-control {
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--agarbatti-orange) !important;
+    box-shadow: 0 0 0 0.2rem rgba(246, 90, 8, 0.15) !important;
+}
+
+/* Badges */
+.badge-warning {
+    background: var(--agarbatti-orange) !important;
+    color: white; 
+    font-weight: 500;
+}
+
+.badge-primary {
+    background: var(--agarbatti-orange) !important;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+}
+
+/* Footer */
+.main-footer {
+    background: var(--agarbatti-white) !important;
+    color: var(--agarbatti-gray) !important;
+    border-top: 1px solid #ef5f06;
+}
+
+/* Custom Agarbatti Elements */
+.welcome-sign {
+    color: var(--agarbatti-orange);
+    font-weight: 600;
+    font-size: 18px;
+}
+
+/* Navigation Icons with Orange */
+.nav-sidebar .fas, .nav-sidebar .fab {
+    color: var(--agarbatti-orange) !important;
+}
+
+/* Pagination */
+.pagination .page-link {
+    color: var(--agarbatti-orange);
+    border-color: #e0e0e0;
+}
+
+.pagination .page-item.active .page-link {
+    background: var(--agarbatti-orange);
+    border-color: var(--agarbatti-orange);
+    color: white;
+}
+
+/* Alerts */
+.alert-warning {
+    background: rgba(246, 90, 8, 0.1);
+    border-color: var(--agarbatti-orange);
+    color: var(--agarbatti-dark);
+}
+
+.alert-success {
+    background: rgba(40, 167, 69, 0.1);
+    border-color: #39914e;
+}
+
+/* Progress Bars */
+.progress-bar {
+    background: linear-gradient(90deg, var(--agarbatti-orange) 0%, var(--agarbatti-orange-light) 100%) !important;
+}
+
+/* Links */
+a {
+    color: var(--agarbatti-orange);
+}
+
+a:hover {
+    color: var(--agarbatti-orange-dark);
+}
+
+/* Custom Orange Text */
+.orange-text {
+    color: var(--agarbatti-orange) !important;
+}
+
+.orange-bg {
+    background: var(--agarbatti-orange) !important;
+    color: white !important;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    background: var(--agarbatti-white);
+}
+
+.breadcrumb-item.active {
+    color: var(--agarbatti-orange);
+}
+
+/* Select2 Dropdowns */
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: var(--agarbatti-orange) !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: var(--agarbatti-orange) !important;
+    border-color: var(--agarbatti-orange);
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-sidebar {
+        box-shadow: none;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .navbar-brand {
+        font-size: 20px !important;
+    }
+}
+
+/* User Menu Styling */
+.navbar-nav.ml-auto .nav-item .dropdown-toggle {
+    color: rgb(206, 8, 8) !important;
+    font-weight: 500;
+}
+
+.navbar-nav.ml-auto .nav-item .dropdown-toggle:hover {
+    color: rgba(241, 11, 11, 0.9) !important;
+}
+
+.navbar-nav.ml-auto .nav-item .dropdown-menu {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+.navbar-nav.ml-auto .nav-item .dropdown-item {
+    color: var(--agarbatti-dark);
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav.ml-auto .nav-item .dropdown-item:hover {
+    background: rgba(246, 90, 8, 0.1);
+    color: var(--agarbatti-orange);
+}
+
+.navbar-nav.ml-auto .nav-item .dropdown-item i {
+    color: var(--agarbatti-orange);
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+}
+
+/* User menu in header */
+.user-panel {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-panel .info {
+    color: rgb(238, 128, 10);
+}
+
+.user-panel .info a:hover {
+    color: rgba(248, 13, 13, 0.8);
+}
+
+/* ===== LOGIN PAGE FIXES ===== */
+
+.login-page {
+    background: var(--agarbatti-white) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.login-box {
+    border: none !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 30px rgba(229, 208, 197, 0.15);
+    background: white !important;
+    width: 400px;
+    max-width: 90%;
+    margin: 20px auto;
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-logo img {
+    max-width: 200px !important;  /* Control image size */
+    height: auto !important;
+    object-fit: contain !important;
+    border-radius: 8px;  /* Optional: remove if you want square corners */
+    padding: 10px;
+    background: white;
+}
+
+.login-logo a {
+    color: var(--agarbatti-orange) !important;
+    font-weight: 700;
+    font-size: 32px;
+    text-decoration: none;
+}
+
+.login-card-body {
+    border: none !important;
+    border-radius: 16px;
+    padding: 30px;
+}
+
+/* Login box header */
+.card-header {
+    background: linear-gradient(135deg, var(--agarbatti-orange) 0%, var(--agarbatti-orange-light) 100%) !important;
+    color: white !important;
+    border: none !important;
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+/* Login form elements */
+.input-group-text {
+    background: var(--agarbatti-orange) !important;
+    border: none !important;
+    color: white !important;
+}
+
+.form-control {
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 8px !important;
+}
+
+.form-control:focus {
+    border-color: var(--agarbatti-orange) !important;
+    box-shadow: 0 0 0 0.2rem rgba(246, 90, 8, 0.15) !important;
+}
+
+/* Login button */
+.btn-primary {
+    background: linear-gradient(135deg, var(--agarbatti-orange) 0%, var(--agarbatti-orange-light) 100%) !important;
+    border: none !important;
+    border-radius: 8px;
+    font-weight: 500;
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--agarbatti-orange-dark) 0%, var(--agarbatti-orange) 100%) !important;
+    transform: translateY(-1px);
+}
+
+/* Links on login page */
+.login-box a {
+    color: var(--agarbatti-orange) !important;
+}
+
+.login-box a:hover {
+    color: var(--agarbatti-orange-dark) !important;
+}
+
+/* Responsive login page */
+@media (max-width: 480px) {
+    .login-box {
+        width: 95%;
+        margin: 10px auto;
+    }
+    
+    .login-logo img {
+        max-width: 150px !important;
+    }
+}
+

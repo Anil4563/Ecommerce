@@ -64,3 +64,5 @@ def remove_from_cart(request, item_id):
     cart_item.delete()
     messages.success(request, 'Item removed from cart.')
     return redirect('cart_detail')
+
+

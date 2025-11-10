@@ -3,7 +3,6 @@ from django.conf import settings
 from django.core.validators import RegexValidator
 from product.models import Product
 
-
 class Order(models.Model):
     # ----- Order Status Choices -----
     PENDING = 'Pending'
@@ -29,6 +28,17 @@ class Order(models.Model):
         (CASH_ON_DELIVERY, 'Cash on Delivery'),
     ]
 
+    # ----- Payment Status Choices -----
+    PAYMENT_PENDING = 'Pending'
+    PAYMENT_PAID = 'Paid'
+    PAYMENT_FAILED = 'Failed'
+
+    PAYMENT_STATUS_CHOICES = [
+        (PAYMENT_PENDING, 'Pending'),
+        (PAYMENT_PAID, 'Paid'),
+        (PAYMENT_FAILED, 'Failed'),
+    ]
+
     # ----- Validators -----
     phone_validator = RegexValidator(
         regex=r'^(97|98)\d{8}$',
@@ -52,6 +62,11 @@ class Order(models.Model):
     )
     esewa_ref_id = models.CharField(max_length=100, blank=True, null=True)
     is_payment_verified = models.BooleanField(default=False)
+    payment_status = models.CharField(
+        max_length=20, 
+        choices=PAYMENT_STATUS_CHOICES, 
+        default=PAYMENT_PENDING
+    )
 
     def __str__(self):
         return f'Order #{self.order_number}'
@@ -68,4 +83,3 @@ class OrderItem(models.Model):
 
     def get_total_price(self):
         return self.quantity * self.price
-

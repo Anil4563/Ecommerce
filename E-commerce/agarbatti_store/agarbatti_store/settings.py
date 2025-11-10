@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,7 +45,6 @@ INSTALLED_APPS = [
     'cart',
     'order',
     'product',
-    'payment',
     'widget_tweaks',
     'crispy_forms',
 ]
@@ -161,4 +161,112 @@ ESEWA_VERIFY_URL = 'https://rc-epay.esewa.com.np/api/epay/transaction/status/'
 
 # Success/Failure URLs for demo
 ESEWA_SUCCESS_URL = 'http://127.0.0.1:8000/orders/esewa-success/'
-ESEWA_FAILURE_URL = 'http://127.0.0.1:8000/orders/esewa-failed/' 
+ESEWA_FAILURE_URL = 'http://127.0.0.1:8000/orders/esewa-failed/'
+
+JAZZMIN_SETTINGS = {
+    # Site Information
+    "site_title": "AgarBatti Admin",
+    "site_header": "AgarBatti", 
+    "site_brand": "AgarBatti",
+    "welcome_sign": "Welcome to AgarBatti Dashboard",
+   
+
+    # Logo Configuration
+    "site_logo": "images/logo.png",
+    "login_logo": "images/logo.png",
+    "site_logo_classes": "images/logo.png",
+    "site_icon": "images/logo.png",
+
+    # Login page specific settings
+    "login_logo_size": "200px",  # Adjust size as needed
+    "login_logo_margin": "20px auto",  # Center the logo
+    
+
+    # Theme
+    "theme": "lux",
+    
+    # Sidebar & Navigation
+    "topmenu_links": [
+        {"name": "🏠 Dashboard", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "🌐 Visit Website", "url": "/", "new_window": True},
+        
+    ],
+    
+   
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+    "related_modal_active": True,
+    "order_with_respect_to": ["auth", "product", "order", "cart", "payment"],
+
+    # Change Form Layout
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {
+        "auth.user": "collapsible",
+        "auth.group": "vertical_tabs",
+    },
+
+    # Custom Icons for Apps/Models
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "product.Product": "fas fa-fire",
+        "product.Category": "fas fa-tags",
+        "order.Order": "fas fa-shopping-bag",
+        "order.OrderItem": "fas fa-list-alt",
+        "cart.Cart": "fas fa-shopping-cart",
+        "cart.CartItem": "fas fa-cart-plus",
+        "payment.Payment": "fas fa-credit-card",
+        "customer.Customer": "fas fa-user-tie",
+    },
+
+    # UI Customizations
+    "custom_css": "css/admin_custom.css",
+    "custom_js": "js/admin_modal.js",
+    
+    # Login Page Customization
+    "login_logo_size": "150px",
+    "show_ui_builder": False,
+    
+    # Additional Settings
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+
+    # Show user menu
+    "show_user_menu": False,
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": False,
+    "accent": "accent-dark",
+    "navbar": "navbar-white navbar-light",
+    "no_navbar_border": False,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-light-dark",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": True,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-dark",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    },
+}
+
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'

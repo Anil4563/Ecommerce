@@ -2,42 +2,6 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import Category, Product
 
-# Simple Trie implementation for search suggestions/autocomplete
-class TrieNode:
-    def __init__(self):
-        self.children = {}
-        self.is_end_of_word = False
-
-class Trie:
-    def __init__(self):
-        self.root = TrieNode()
-
-    def insert(self, word):
-        node = self.root
-        for char in word.lower():  # case-insensitive
-            if char not in node.children:
-                node.children[char] = TrieNode()
-            node = node.children[char]
-        node.is_end_of_word = True
-
-    def search_prefix(self, prefix):
-        node = self.root
-        for char in prefix.lower():
-            if char not in node.children:
-                return []
-            node = node.children[char]
-        return self._get_words_from_node(node, prefix.lower())
-
-    def _get_words_from_node(self, node, prefix):
-        words = []
-        if node.is_end_of_word:
-            words.append(prefix)
-        for char, child_node in node.children.items():
-            words.extend(self._get_words_from_node(child_node, prefix + char))
-        return words
-
-
-# List of products with filters
 class ProductListView(ListView):
     model = Product
     template_name = 'product/product_list.html'
@@ -45,21 +9,12 @@ class ProductListView(ListView):
     paginate_by = 12
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(is_available=True)
-        search_query = self.request.GET.get('q')
+        queryset = Product.objects.filter(is_available=True)
+        search_query = self.request.GET.get('q', '').strip()
 
         if search_query:
-            # Build trie of available product names
-            trie = Trie()
-            all_items = list(queryset)
-            for item in all_items:
-                trie.insert(item.name)
-
-            # Get all names matching prefix
-            matched_names = trie.search_prefix(search_query)
-
-            # Filter queryset by matched names
-            queryset = queryset.filter(name__in=matched_names)
+            # Prefix search (case-insensitive)
+            queryset = queryset.filter(name__istartswith=search_query)
 
         # Category filter
         category_slug = self.request.GET.get('category')
@@ -81,18 +36,12 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
-
-        # Provide unique options for dropdowns
         context['fragrances'] = Product.objects.values_list('fragrance', flat=True).distinct()
         context['burn_times'] = Product.objects.values_list('burn_time', flat=True).distinct()
-
-        # Preserve search query in template
         context['q'] = self.request.GET.get('q', '')
-
         return context
 
 
-# Product detail view
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'product/product_detail.html'
@@ -109,7 +58,6 @@ class ProductDetailView(DetailView):
         return context
 
 
-# Category list view
 class CategoryListView(ListView):
     model = Category
     template_name = 'product/category_list.html'

@@ -3,94 +3,195 @@
 {% block title %}Your Cart - Agarbatti Store{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 class="mb-4">Your Cart</h1>
-    
-    {% if cart_items %}
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Total</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+<div class="container {% if not cart_items %}min-vh-80{% endif %}">
+    <div class="{% if not cart_items %}d-flex align-items-center justify-content-center{% endif %}" style="{% if not cart_items %}min-height: 70vh;{% endif %}">
+        <div class="{% if not cart_items %}w-100{% endif %}">
+            <h1 class="mb-1 {% if not cart_items %}text-center{% endif %}">Your Cart</h1>
+            
+            {% if cart_items %}
+            <div class="row">
+                <!-- Desktop Table View -->
+                <div class="col-md-8 d-none d-md-block">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Total</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in cart_items %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" 
+                                                     style="width: 50px; height: 50px; object-fit: cover;" class="me-3 rounded">
+                                                <div>
+                                                    <h6 class="mb-0">{{ item.product.name }}</h6>
+                                                    <small class="text-muted">{{ item.product.category.name }}</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="{% url 'update_cart' item.id %}" class="d-flex">
+                                                {% csrf_token %}
+                                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" 
+                                                       class="form-control" style="width: 70px;">
+                                                <button type="submit" class="btn btn-sm btn-outline-primary ms-2">Update</button>
+                                            </form>
+                                        </td>
+                                        <td>Rs.{{ item.product.price }}</td>
+                                        <td>Rs.{{ item.get_total_price }}</td>
+                                        <td>
+                                            <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-sm btn-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile Card View -->
+                <div class="col-12 d-block d-md-none">
+                    <div class="card mb-4">
+                        <div class="card-body">
                             {% for item in cart_items %}
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" 
-                                             style="width: 50px; height: 50px; object-fit: cover;" class="me-3 rounded">
-                                        <div>
-                                            <h6 class="mb-0">{{ item.product.name }}</h6>
+                            <div class="card mb-3 border">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-3">
+                                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" 
+                                                 style="width: 60px; height: 60px; object-fit: cover;" class="rounded">
+                                        </div>
+                                        <div class="col-9">
+                                            <h6 class="mb-1">{{ item.product.name }}</h6>
                                             <small class="text-muted">{{ item.product.category.name }}</small>
+                                            <div class="mt-2">
+                                                <strong>Rs.{{ item.get_total_price }}</strong>
+                                                <small class="text-muted d-block">Rs.{{ item.product.price }} each</small>
+                                            </div>
                                         </div>
                                     </div>
-                                </td>
-                                <td>
-                                    <form method="post" action="{% url 'update_cart' item.id %}" class="d-flex">
-                                        {% csrf_token %}
-                                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1" 
-                                               class="form-control" style="width: 70px;">
-                                        <button type="submit" class="btn btn-sm btn-outline-primary ms-2">Update</button>
-                                    </form>
-                                </td>
-                                <td>Rs.{{ item.product.price }}</td>
-                                <td>Rs.{{ item.get_total_price }}</td>
-                                <td>
-                                    <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                                    
+                                    <div class="row mt-3">
+                                        <div class="col-7">
+                                            <form method="post" action="{% url 'update_cart' item.id %}" class="d-flex align-items-center">
+                                                {% csrf_token %}
+                                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" 
+                                                       class="form-control me-2" style="width: 80px;">
+                                                <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-5 text-end">
+                                            <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-sm btn-danger">
+                                                <i class="fas fa-trash-alt"></i> Remove
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             {% endfor %}
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Order Summary (Same for both) -->
+                <div class="col-12 col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Order Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tr>
+                                    <th>Subtotal</th>
+                                    <td>Rs.{{ cart_total|floatformat:2 }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Tax (10%)</th>
+                                    <td>Rs.{{ tax|floatformat:2 }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Delivery Fee</th>
+                                    <td>Rs.{{ delivery_fee|floatformat:2 }}</td>
+                                </tr>
+                                <tr class="table-active">
+                                    <th>Total</th>
+                                    <td>Rs.{{ grand_total|floatformat:2 }}</td>
+                                </tr>
+                            </table>
+                            <a href="{% url 'checkout' %}" class="btn btn-primary w-100 mt-3">Proceed to Checkout</a>
+                            <a href="{% url 'product_list' %}" class="btn btn-outline-secondary w-100 mt-2">Continue Shopping</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Order Summary</h5>
+            {% else %}
+            <!-- Empty Cart State - Perfectly centered -->
+            <div class="text-center">
+                <div class="empty-cart-icon">
+                    <i class="fas fa-shopping-cart fa-2x text-muted"></i>
                 </div>
-                <div class="card-body">
-                    <table class="table">
-                        <tr>
-                            <th>Subtotal</th>
-                            <td>Rs.{{ cart_total|floatformat:2 }}</td>
-                        </tr>
-                        <tr>
-                            <th>Tax (10%)</th>
-                            <td>Rs.{{ tax|floatformat:2 }}</td>
-                        </tr>
-                        <tr>
-                            <th>Delivery Fee</th>
-                            <td>Rs.{{ delivery_fee|floatformat:2 }}</td>
-                        </tr>
-                        <tr class="table-active">
-                            <th>Total</th>
-                            <td>Rs.{{ grand_total|floatformat:2 }}</td>
-                        </tr>
-                    </table>
-                    <a href="{% url 'checkout' %}" class="btn btn-primary w-100 mt-3">Proceed to Checkout</a>
-                    <a href="{% url 'product_list' %}" class="btn btn-outline-secondary w-100 mt-2">Continue Shopping</a>
-                </div>
+                <h3 class="text-muted mb-2">Your cart is empty</h3>
+                <p class="text-muted mb-3">Browse our premium collection of agarbatti and dhoop batti to add items to your cart.</p>
+                <a href="{% url 'product_list' %}" class="btn btn-primary px-4">
+                    <i class="fas fa-store me-2"></i>Browse Products
+                </a>
             </div>
+            {% endif %}
         </div>
     </div>
-    {% else %}
-    <div class="alert alert-info">
-        Your cart is empty. <a href="{% url 'product_list' %}">Browse our products</a> to add items.
-    </div>
-    {% endif %}
 </div>
+
+<style>
+@media (max-width: 767.98px) {
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .table th,
+    .table td {
+        padding: 0.5rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .container {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    
+    .card-body {
+        padding: 0.75rem;
+    }
+    
+    input.form-control {
+        width: 70px !important;
+    }
+    
+    .empty-cart-icon i {
+        font-size: 2.5rem;
+    }
+}
+
+
+</style>
 {% endblock %}
